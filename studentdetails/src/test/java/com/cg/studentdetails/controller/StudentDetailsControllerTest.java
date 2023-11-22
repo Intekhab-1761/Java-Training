@@ -1,6 +1,7 @@
 package com.cg.studentdetails.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -41,6 +42,27 @@ class StudentDetailsControllerTest {
 	void getAllDetailsTest() {
 		when(repository.findAll()).thenReturn(students);
 		assertThat(controller.getAllDetails()).hasSameElementsAs(students);
+	}
+	
+	@Test
+	void AddStudentDetailsTest() {
+		StudentDetails student = new StudentDetails(4,"Intekhab","30","8000");
+		when(repository.save(student)).thenReturn(student);
+		assertEquals(controller.AddStudentDetails(student).getName(),(student.getName()));
+	}
+	
+	@Test
+	void updateStudentDetailsTest() {
+		StudentDetails student = new StudentDetails(4,"Intekhab","30","8000");
+		when(repository.save(student)).thenReturn(student);
+		assertEquals(controller.updateStudentDetails(4,student).getName(),(student.getName()));
+	}
+	
+	@Test
+	void deleteStudentDetailsTest() {
+		String str = "Details successfully deleted!"; 
+		//when(repository.deleteById(1)).thenReturn(str);
+		assertEquals(controller.deleteStudentDetails(1),str);
 	}
 
 }
