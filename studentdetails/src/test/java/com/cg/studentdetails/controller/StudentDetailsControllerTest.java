@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,6 +18,7 @@ import com.cg.studentdetails.document.StudentDetails;
 import com.cg.studentdetails.repository.StudentDetailsRepository;
 
 @ExtendWith(MockitoExtension.class)
+@TestInstance(Lifecycle.PER_CLASS)
 class StudentDetailsControllerTest {
 
 	@Mock
@@ -37,7 +40,7 @@ class StudentDetailsControllerTest {
 	@Test
 	void getAllDetailsTest() {
 		when(repository.findAll()).thenReturn(students);
-		assertThat(repository.findAll()).hasSameElementsAs(students);
+		assertThat(controller.getAllDetails()).hasSameElementsAs(students);
 	}
 
 }
