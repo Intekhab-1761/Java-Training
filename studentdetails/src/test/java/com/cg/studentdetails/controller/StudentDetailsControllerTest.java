@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -53,9 +54,10 @@ class StudentDetailsControllerTest {
 	
 	@Test
 	void updateStudentDetailsTest() {
-		StudentDetails student = new StudentDetails(4,"Intekhab","30","8000");
-		when(repository.save(student)).thenReturn(student);
-		assertEquals(controller.updateStudentDetails(4,student).getName(),(student.getName()));
+		Optional<StudentDetails > student = Optional.of(new StudentDetails(4,"Intekhab","30","8000"));
+		when(repository.findById(4)).thenReturn(student);
+		when(repository.save(student.get())).thenReturn(student.get());
+		assertEquals(controller.updateStudentDetails(4,student.get()).getName(),(student.get().getName()));
 	}
 	
 	@Test

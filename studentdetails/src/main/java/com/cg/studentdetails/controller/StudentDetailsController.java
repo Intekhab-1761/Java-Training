@@ -1,6 +1,7 @@
 package com.cg.studentdetails.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,14 +37,19 @@ public class StudentDetailsController {
 	@PutMapping("/{id}")
 	public StudentDetails updateStudentDetails(@PathVariable Integer id,@RequestBody StudentDetails student)
 	{
-		StudentDetails details = repository.findById(id).get();
+		Optional<StudentDetails> optional = repository.findById(id);
 		
-		details.setName(student.getName());
-		details.setAge(student.getAge());
-		details.setSalary(student.getSalary());
+		if(optional.isPresent()) {
+			StudentDetails details = optional.get();
+			details.setName(student.getName());
+			details.setAge(student.getAge());
+			details.setSalary(student.getSalary());
+			
+			StudentDetails updatedDetails = repository.save(details);
+			return updatedDetails;
+		}		
 		
-		StudentDetails updatedDetails = repository.save(details);
-		return  updatedDetails;
+		return  null;
 	}
 	
 	@DeleteMapping("/{id}")
