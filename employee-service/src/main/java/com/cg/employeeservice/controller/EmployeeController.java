@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.employeeservice.dto.APIResponseDto;
 import com.cg.employeeservice.dto.EmployeeDto;
 import com.cg.employeeservice.service.EmployeeService;
 
@@ -21,16 +22,16 @@ public class EmployeeController {
 	
 	private EmployeeService service;
 	
-	@PostMapping
+	@PostMapping 
 	public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto){
 		EmployeeDto employee = service.saveEmployee(employeeDto);
 		return new ResponseEntity<EmployeeDto>(employee, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id){
-		EmployeeDto employee = service.getEmployeeById(id);
-		return new ResponseEntity<EmployeeDto>(employee, HttpStatus.OK);
+	public ResponseEntity<APIResponseDto> getEmployeeById(@PathVariable Long id){
+		APIResponseDto employee = service.getEmployeeById(id);
+		return new ResponseEntity<APIResponseDto>(employee, HttpStatus.OK);
 	}
 
 }
